@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PaletteForge — Color Palette &amp; Gradient Generator</title>
+<meta name="description" content="Generate, lock, edit and export stunning color palettes and gradients — entirely in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+
+<!-- ============ ICON SPRITE ============ -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icon-lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0110 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="5" y="10" width="14" height="11" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="icon-unlock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 019.5-2.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="5" y="10" width="14" height="11" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="icon-drag" viewBox="0 0 24 24"><circle cx="8" cy="6" r="1.6" fill="currentColor"/><circle cx="16" cy="6" r="1.6" fill="currentColor"/><circle cx="8" cy="12" r="1.6" fill="currentColor"/><circle cx="16" cy="12" r="1.6" fill="currentColor"/><circle cx="8" cy="18" r="1.6" fill="currentColor"/><circle cx="16" cy="18" r="1.6" fill="currentColor"/></symbol>
+  <symbol id="icon-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15V6a2 2 0 012-2h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v5.5M12 7.6v.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></g></symbol>
+  <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 119.5 4 7 7 0 0020 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 19l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m-9 0l1 13a1 1 0 001 1h8a1 1 0 001-1l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-print" viewBox="0 0 24 24"><path d="M7 8V3h10v5M7 17h10v4H7v-4zM5 8h14a2 2 0 012 2v5h-4M5 8a2 2 0 00-2 2v5h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-shuffle" viewBox="0 0 24 24"><path d="M3 6h3.5L15 18h6M3 18h3.5L11 12M15 6h6m-3-3l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-plus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="icon-stack" viewBox="0 0 24 24"><path d="M12 3l8 4-8 4-8-4 8-4zM4 12l8 4 8-4M4 16l8 4 8-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="icon-keys" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 11h.01M11 11h.01M15 11h.01M9 14h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24"><path d="M5 13l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<!-- ============ AMBIENT BACKGROUND ============ -->
+<div class="bg-layer" id="bgLayer" aria-hidden="true">
+  <div class="bg-shapes" id="bgShapes">
+    <span class="shape shape-1"></span>
+    <span class="shape shape-2"></span>
+    <span class="shape shape-3"></span>
+    <span class="shape shape-4"></span>
+  </div>
+  <div class="particles" id="particles"></div>
+  <div class="grain"></div>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <h1>Palette<span class="accent-text">Forge</span></h1>
+  </div>
+
+  <nav class="topbar-actions">
+    <div class="select-wrap" data-tooltip="Choose a palette style">
+      <select id="themeStyle" class="theme-select" aria-label="Palette style">
+        <option value="random">✦ Surprise Me</option>
+        <option value="pastel">Pastel</option>
+        <option value="neon">Neon</option>
+        <option value="cyberpunk">Cyberpunk</option>
+        <option value="vintage">Vintage</option>
+        <option value="monochrome">Monochrome</option>
+        <option value="earth">Earth Tones</option>
+        <option value="sunset">Sunset</option>
+        <option value="ocean">Ocean</option>
+        <option value="futuristic">Futuristic</option>
+      </select>
+    </div>
+
+    <button id="libraryBtn" class="icon-btn ripple magnetic" data-tooltip="Library">
+      <svg width="20" height="20"><use href="#icon-stack"/></svg>
+    </button>
+    <button id="shortcutsBtn" class="icon-btn ripple magnetic" data-tooltip="Shortcuts (?)">
+      <svg width="20" height="20"><use href="#icon-keys"/></svg>
+    </button>
+    <button id="modeToggle" class="icon-btn ripple magnetic mode-toggle" data-tooltip="Toggle theme (D)">
+      <svg class="icon-sun" width="19" height="19"><use href="#icon-sun"/></svg>
+      <svg class="icon-moon" width="19" height="19"><use href="#icon-moon"/></svg>
+    </button>
+  </nav>
+</header>
+
+<!-- ============ MAIN ============ -->
+<main>
+  <section class="hero fade-in-up">
+    <p class="eyebrow">Generate · Lock · Customize · Export</p>
+    <h2 class="hero-title">Craft palettes that feel <span class="hero-gradient-text">inevitable.</span></h2>
+    <p class="hero-sub">Spacebar to generate. Click any swatch to inspect, edit and copy it. Drag to reorder.</p>
+
+    <div class="hero-controls">
+      <div class="count-stepper" data-tooltip="Number of colors">
+        <button id="countMinus" class="stepper-btn ripple" aria-label="Fewer colors">−</button>
+        <span id="countValue">5</span>
+        <button id="countPlus" class="stepper-btn ripple" aria-label="More colors">+</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="palette-strip" id="paletteStrip" aria-label="Generated color palette"></section>
+
+  <section class="toolbar fade-in-up">
+    <button id="generateBtn" class="btn btn-primary shimmer ripple magnetic" data-tooltip="Generate new palette (Space)">
+      <svg width="18" height="18"><use href="#icon-shuffle"/></svg> Generate Palette
+    </button>
+    <button id="lockAllBtn" class="btn btn-ghost ripple" data-tooltip="Lock / unlock all (L)">Lock All</button>
+    <button id="saveBtn" class="btn btn-ghost ripple" data-tooltip="Save to library (Ctrl+S)">Save Palette</button>
+
+    <div class="export-menu">
+      <button id="exportToggle" class="btn btn-ghost ripple">Export ▾</button>
+      <div class="export-dropdown" id="exportDropdown">
+        <button id="copyAllBtn"><svg width="16" height="16"><use href="#icon-copy"/></svg> Copy all codes</button>
+        <button id="downloadBtn"><svg width="16" height="16"><use href="#icon-download"/></svg> Download .txt</button>
+        <button id="printBtn"><svg width="16" height="16"><use href="#icon-print"/></svg> Print palette</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GRADIENT BUILDER ============ -->
+  <section class="gradient-section fade-in-up" id="gradientSection">
+    <div class="section-head">
+      <div>
+        <h3>Gradient Builder</h3>
+        <p class="section-sub">Add swatches as stops, choose linear or radial, fine-tune the angle.</p>
+      </div>
+      <button id="gradientToggleBtn" class="btn btn-ghost small ripple" aria-expanded="false">Open ▾</button>
+    </div>
+
+    <div class="gradient-panel" id="gradientPanel">
+      <div class="gradient-stops" id="gradientStops">
+        <p class="empty-hint" id="gradientEmptyHint">Click the <svg width="13" height="13"><use href="#icon-plus-circle"/></svg> icon on a swatch to add it here.</p>
+      </div>
+
+      <div class="gradient-controls">
+        <div class="control-group">
+          <span class="control-label">Type</span>
+          <div class="segmented" id="gradientType">
+            <button class="seg-btn active" data-type="linear">Linear</button>
+            <button class="seg-btn" data-type="radial">Radial</button>
+          </div>
+        </div>
+
+        <div class="control-group" id="angleGroup">
+          <span class="control-label">Angle — <span id="angleValue">90°</span></span>
+          <input type="range" id="angleSlider" min="0" max="360" value="90" class="slider">
+        </div>
+
+        <div class="control-group">
+          <label class="checkbox-row">
+            <input type="checkbox" id="autoRotate">
+            <span>Auto-rotate preview</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="gradient-preview-wrap">
+        <div class="preview-ring" id="previewRing" aria-hidden="true"></div>
+        <div class="gradient-preview" id="gradientPreview"></div>
+      </div>
+
+      <div class="gradient-actions">
+        <code class="gradient-css" id="gradientCssText">linear-gradient(90deg, ...)</code>
+        <div class="gradient-actions-buttons">
+          <button id="copyGradientBtn" class="btn btn-ghost small ripple">Copy CSS</button>
+          <button id="saveGradientBtn" class="btn btn-ghost small ripple">Save Gradient</button>
+          <button id="clearGradientBtn" class="btn btn-ghost small ripple">Clear</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>Press <kbd>?</kbd> for keyboard shortcuts · Everything runs in your browser — nothing is ever uploaded.</p>
+  </footer>
+</main>
+
+<!-- ============ LIBRARY DRAWER ============ -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="libraryDrawer" aria-label="Library">
+  <div class="drawer-head">
+    <div class="drawer-tabs">
+      <button class="drawer-tab active" data-tab="saved">Saved</button>
+      <button class="drawer-tab" data-tab="history">History</button>
+      <button class="drawer-tab" data-tab="gradients">Gradients</button>
+    </div>
+    <button class="icon-btn ripple" id="closeDrawerBtn" aria-label="Close library">
+      <svg width="18" height="18"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+
+  <div class="drawer-body">
+    <div class="drawer-panel active" data-panel="saved">
+      <div class="search-row">
+        <svg width="16" height="16"><use href="#icon-search"/></svg>
+        <input id="searchSaved" type="text" placeholder="Search saved palettes by name or hex…">
+      </div>
+      <div class="compare-bar" id="compareBar" hidden>
+        <span id="compareCount">0 selected</span>
+        <button id="compareBtn" class="btn btn-ghost small ripple">Compare</button>
+      </div>
+      <ul id="savedList" class="entity-list"></ul>
+      <p class="empty-state" id="savedEmpty" hidden>No saved palettes yet. Hit “Save Palette” to start your library.</p>
+    </div>
+
+    <div class="drawer-panel" data-panel="history">
+      <p class="section-sub" style="padding:0 2px 10px;">Your last 20 generated palettes, newest first.</p>
+      <ul id="historyList" class="entity-list"></ul>
+      <p class="empty-state" id="historyEmpty" hidden>No history yet — generate a few palettes!</p>
+    </div>
+
+    <div class="drawer-panel" data-panel="gradients">
+      <ul id="gradientsList" class="entity-list"></ul>
+      <p class="empty-state" id="gradientsEmpty" hidden>No saved gradients yet.</p>
+    </div>
+  </div>
+</aside>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-overlay" id="shortcutsModal">
+  <div class="modal glass fade-in-up">
+    <div class="modal-head">
+      <h3>Keyboard Shortcuts</h3>
+      <button class="icon-btn ripple" id="closeShortcuts" aria-label="Close"><svg width="18" height="18"><use href="#icon-close"/></svg></button>
+    </div>
+    <ul class="shortcuts-list">
+      <li><kbd>Space</kbd><span>Generate new palette</span></li>
+      <li><kbd>1</kbd>–<kbd>9</kbd><span>Toggle lock on swatch N</span></li>
+      <li><kbd>L</kbd><span>Lock / unlock all swatches</span></li>
+      <li><kbd>Ctrl</kbd>+<kbd>S</kbd><span>Save current palette</span></li>
+      <li><kbd>D</kbd><span>Toggle dark / light mode</span></li>
+      <li><kbd>G</kbd><span>Open gradient builder</span></li>
+      <li><kbd>Ctrl</kbd>+<kbd>P</kbd><span>Print current palette</span></li>
+      <li><kbd>?</kbd><span>Show this panel</span></li>
+      <li><kbd>Esc</kbd><span>Close panels &amp; modals</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal-overlay" id="compareModal">
+  <div class="modal glass compare-modal fade-in-up">
+    <div class="modal-head">
+      <h3>Compare Palettes</h3>
+      <button class="icon-btn ripple" id="closeCompare" aria-label="Close"><svg width="18" height="18"><use href="#icon-close"/></svg></button>
+    </div>
+    <div class="compare-grid" id="compareGrid"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="saveModal">
+  <div class="modal glass small fade-in-up">
+    <div class="modal-head">
+      <h3>Save Palette</h3>
+      <button class="icon-btn ripple" id="closeSaveModal" aria-label="Close"><svg width="18" height="18"><use href="#icon-close"/></svg></button>
+    </div>
+    <input id="saveNameInput" type="text" placeholder="Name this palette (optional)" maxlength="40">
+    <div class="modal-actions">
+      <button class="btn btn-ghost ripple" id="cancelSave">Cancel</button>
+      <button class="btn btn-primary ripple" id="confirmSave">Save to Library</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
